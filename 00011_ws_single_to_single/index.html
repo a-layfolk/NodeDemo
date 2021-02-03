@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>聊天室</title>
+</head>
+
+<body>
+<div id="app">
+  <ul>
+    <li v-for="item in msgList" :key="item.id">
+      {{item}}
+    </li>
+  </ul>
+  <p><input type="text" v-model="msg" style="height: 20vh; width: 50vw;"/></p>
+  <p><input type="text" v-model="toName" style="height: 20vh; width: 50vw;" placeholder="你要发送给谁"/></p>
+  <p><input type="text" v-model="fromName" style="height: 20vh; width: 50vw;" placeholder="你的名字" /></p>
+  <button v-on:click="handleBtnSend" style="height: 20vh; width: 50vw;">发送</button>
+  <button v-on:click="handleBtnClose" style="height: 20vh; width: 50vw;">关闭</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+var ws = new WebSocket('ws://localhost:8000');
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    msg: '',
+    toName: '',
+    fromName: '',
+    msgList: []
+  },
+  methods: {
+    handleBtnSend: function () {
+      ws.send(JSON.stringify({
+        toName: this.toName,
+        fromName: this.fromName,
+        msg: this.msg,
+        isclosed: false
+      }));
+
+      // 接收服务器响应回来的信息
+      var _this = this;
+      ws.onmessage = function (e) {
+        var msg = JSON.parse(e.data).msg;
+        var fromName = JSON.parse(e.data).fromName;
+        _this.msgList.push({
+          fromName: fromName,
+          msg: msg,
+          date: new Date().toLocaleDateString()
+        });
+        console.log(e.data);
+      }
+    },
+    handleBtnClose: function () {
+      ws.send(JSON.stringify({
+        toName: this.toName,
+        fromName: this.fromName,
+        msg: null,
+        isclosed: true
+      }));
+      ws.close();
+    }
+  },
+
+  // 这是 Vue 生命周期的一部分
+  mounted: function () {
+  }
+});
+
+</script>
+</body>
+</html>
