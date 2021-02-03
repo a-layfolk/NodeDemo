@@ -1,0 +1,70 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+    color: #00B7FF;
+}
+#content {
+    width: 800px;  /*程序界面的宽度是800p，水平居中*/
+    margin-left: auto;
+    margin-right: auto;
+}
+#room {
+  background-color: #ddd;  /*显示当前聊天室名称那个区域的CSS规则*/
+    margin-bottom: 1em;
+}
+#messages {
+    width: 690px;  /*显示消息的区域宽690p，高300p*/
+    height: 300px;
+    overflow: auto;  /*让显示消息的区域在内容填满后可以向下滚动*/
+    background-color: #eee;
+    margin-bottom: 1em;
+    margin-right: 10px;
+}
+
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+    color: #00B7FF;
+}
+#content {
+    width: 800px;  /*程序界面的宽度是800p，水平居中*/
+    margin-left: auto;
+    margin-right: auto;
+}
+#room {
+  background-color: #ddd;  /*显示当前聊天室名称那个区域的CSS规则*/
+    margin-bottom: 1em;
+}
+#messages {
+    width: 690px;  /*显示消息的区域宽690p，高300p*/
+    height: 300px;
+    overflow: auto;  /*让显示消息的区域在内容填满后可以向下滚动*/
+    background-color: #eee;
+    margin-bottom: 1em;
+    margin-right: 10px;
+}
+
+#room-list {
+    float: right;
+    width: 100px;
+    height: 300px;
+    overflow: auto;
+}
+#room-list div {
+    border-bottom: 1px solid #eee;
+}
+#room-list div:hover {
+    background-color: #ddd;
+}
+#send-message {
+    width: 700px;
+    margin-bottom: 1em;
+    margin-right: 1em;
+}
+#help {
+    font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
+}

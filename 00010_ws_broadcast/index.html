@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>聊天室</title>
+</head>
+
+<body>
+<div id="app">
+  <ul>
+    <li v-for="item in msgList" :key="item.id">
+      {{item}}
+    </li>
+  </ul>
+  <p><input type="text" v-model="msg" style="height: 20vh; width: 50vw;"/></p>
+  <button v-on:click="handleBtnSend" style="height: 20vh; width: 50vw;">发送</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+
+var ws = new WebSocket('ws://localhost:8000');
+var app = new Vue({
+  el: '#app',
+  data: {
+    username: 'zhangsan',
+    msg: '',
+    msgList: []
+  },
+  methods: {
+    handleBtnSend: function () {
+      ws.send(JSON.stringify({
+        id: new Date().toString(),
+        username: this.username,
+        msg: this.msg
+      }));
+
+      // 接收服务器响应回来的信息
+      var _this = this;
+      ws.onmessage = function (e) {
+        var msg = JSON.parse(e.data).msg;
+        _this.msgList.push(msg);
+        console.log(e.data);
+      }
+    }
+  },
+
+  // 这是 Vue 生命周期的一部分
+  mounted: function () {
+    ws.onopen = function () {
+      ws.send(this.username + '访问了服务器');
+    };
+  }
+});
+
+</script>
+</body>
+</html>
